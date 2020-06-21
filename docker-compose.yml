@@ -1,15 +1,16 @@
 version: '3'
 services:
-  db:
-    image: postgres:9.6.11
-    environment:
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_USER: "rails"
-      POSTGRES_DB: "rails"
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    ports:
-      - "5002:5432"
+# Uncomment this if you want to use postgres like database.
+#  db:
+#    image: postgres:9.6.11
+#    environment:
+#      POSTGRES_PASSWORD: "password"
+#      POSTGRES_USER: "rails"
+#      POSTGRES_DB: "rails"
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#    ports:
+#      - "5002:5432"
 
   web:
     image: jefecito/ruby:2.7.1-rails-node14-dev
@@ -17,14 +18,13 @@ services:
       - ./src:/myapp
     ports:
       - 3000:3000
-    depends_on:
-      - db
     environment:
       RAILS_ENV: development
       WEB_CONCURRENCY: 1
       MAX_THREADS: 1
-      DB_HOST: db
       BUNDLE_PATH: '/myapp/vendor/bundle'
+#    depends_on:
+#      - db
 
 volumes:
   db-data: null
